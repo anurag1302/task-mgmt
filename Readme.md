@@ -1,0 +1,1 @@
+dotnet8 console
