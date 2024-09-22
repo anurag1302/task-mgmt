@@ -1,4 +1,6 @@
 
+using TasksMgmtAPI.Utilities;
+
 namespace TasksMgmtAPI
 {
     public class Program
@@ -13,6 +15,7 @@ namespace TasksMgmtAPI
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
 
             var app = builder.Build();
 
