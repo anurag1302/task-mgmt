@@ -1,0 +1,8 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/api/TasksMgmtAPI/.vs/TasksMgmtAPI
+/api/TasksMgmtAPI/bin/Debug/net8.0
+/api/TasksMgmtAPI/obj
+/api/TasksMgmtAPI/TasksMgmtAPI.csproj.user
