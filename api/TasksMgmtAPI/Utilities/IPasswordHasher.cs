@@ -4,6 +4,6 @@
     {
         string GeneratePasswordHash(string password);
 
-        bool VerifyPassword(string password);
+        bool VerifyPassword(string loginPassword, string savedPasswordHash);
     }
 }

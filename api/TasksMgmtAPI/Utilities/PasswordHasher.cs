@@ -19,9 +19,17 @@ namespace TasksMgmtAPI.Utilities
             return hashedPassword;
         }
 
-        public bool VerifyPassword(string password)
+        public bool VerifyPassword(string loginPassword, string savedPassword)
         {
-            throw new NotImplementedException();
+            var parts = savedPassword.Split('-');
+
+            byte[] savedHash = Convert.FromHexString(parts[0]);
+            byte[] salt = Convert.FromHexString(parts[1]);
+
+            byte[] derivedHashFromLoginPassword = Rfc2898DeriveBytes.Pbkdf2(loginPassword, salt, Iterations, HashAlgorithm, HashSize);
+
+            //If savedHash and derivedHashFromLoginPassword are equal, then password is CORRECT else NOT
+            return CryptographicOperations.FixedTimeEquals(savedHash, derivedHashFromLoginPassword);
         }
     }
 }
