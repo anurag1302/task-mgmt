@@ -12,43 +12,21 @@ const RegisterForm = () => {
 
   const [errors, setErrors] = useState({});
 
-  // Handle form input changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Simple validation
-    const validationErrors = {};
-    if (!formData.firstName)
-      validationErrors.firstName = "First name is required";
-    if (!formData.lastName) validationErrors.lastName = "Last name is required";
-    if (!formData.email) validationErrors.email = "Email is required";
-    if (!formData.password) validationErrors.password = "Password is required";
-    if (formData.password !== formData.confirmPassword) {
-      validationErrors.confirmPassword = "Passwords do not match";
-    }
-
-    setErrors(validationErrors);
-
-    // If no validation errors, submit form
-    if (Object.keys(validationErrors).length === 0) {
-      alert("Form submitted successfully!");
-      console.log(formData);
-    }
+    // Form validation and handling logic here
+    console.log("Form submitted:", formData);
   };
 
   return (
-    <div className="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg mt-8">
-      <h2 className="text-2xl font-bold mb-6 text-center">
-        Register for Task Management System
-      </h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {/* First Name */}
-        <div>
+    <div className="max-w-lg mx-auto p-4 sm:p-6 bg-white rounded-lg shadow-md mt-8">
+      <h2 className="text-2xl font-bold text-center mb-6">Register</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-4">
           <label className="block font-semibold mb-2" htmlFor="firstName">
             First Name
           </label>
@@ -60,13 +38,9 @@ const RegisterForm = () => {
             value={formData.firstName}
             onChange={handleChange}
           />
-          {errors.firstName && (
-            <p className="text-red-500 text-sm">{errors.firstName}</p>
-          )}
         </div>
 
-        {/* Last Name */}
-        <div>
+        <div className="mb-4">
           <label className="block font-semibold mb-2" htmlFor="lastName">
             Last Name
           </label>
@@ -78,13 +52,9 @@ const RegisterForm = () => {
             value={formData.lastName}
             onChange={handleChange}
           />
-          {errors.lastName && (
-            <p className="text-red-500 text-sm">{errors.lastName}</p>
-          )}
         </div>
 
-        {/* Email */}
-        <div>
+        <div className="mb-4">
           <label className="block font-semibold mb-2" htmlFor="email">
             Email
           </label>
@@ -96,13 +66,9 @@ const RegisterForm = () => {
             value={formData.email}
             onChange={handleChange}
           />
-          {errors.email && (
-            <p className="text-red-500 text-sm">{errors.email}</p>
-          )}
         </div>
 
-        {/* Password */}
-        <div>
+        <div className="mb-4">
           <label className="block font-semibold mb-2" htmlFor="password">
             Password
           </label>
@@ -114,13 +80,9 @@ const RegisterForm = () => {
             value={formData.password}
             onChange={handleChange}
           />
-          {errors.password && (
-            <p className="text-red-500 text-sm">{errors.password}</p>
-          )}
         </div>
 
-        {/* Confirm Password */}
-        <div>
+        <div className="mb-4">
           <label className="block font-semibold mb-2" htmlFor="confirmPassword">
             Confirm Password
           </label>
@@ -132,13 +94,9 @@ const RegisterForm = () => {
             value={formData.confirmPassword}
             onChange={handleChange}
           />
-          {errors.confirmPassword && (
-            <p className="text-red-500 text-sm">{errors.confirmPassword}</p>
-          )}
         </div>
 
-        {/* Date of Birth */}
-        <div>
+        <div className="mb-4">
           <label className="block font-semibold mb-2" htmlFor="dateOfBirth">
             Date of Birth
           </label>
@@ -152,7 +110,6 @@ const RegisterForm = () => {
           />
         </div>
 
-        {/* Submit Button */}
         <div className="text-center">
           <button
             type="submit"

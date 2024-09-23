@@ -8,12 +8,19 @@ import Footer from "./components/Footer";
 const App = () => {
   return (
     <Router>
-      <div>
+      <div className="flex flex-col min-h-screen">
+        {/* Header */}
         <Header />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/register" element={<RegisterForm />} />
-        </Routes>
+
+        {/* Main Content */}
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/register" element={<RegisterForm />} />
+          </Routes>
+        </main>
+
+        {/* Footer */}
         <Footer />
       </div>
     </Router>
