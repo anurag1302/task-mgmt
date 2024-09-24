@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
-using TasksMgmtAPI.Domain;
+using TasksMgmt.API.Models;
+using TasksMgmt.Core.Entities;
 using TasksMgmtAPI.Models;
 using TasksMgmtAPI.Utilities;
 
@@ -11,7 +12,7 @@ namespace TasksMgmtAPI.Controllers
     public class UserController : ControllerBase
     {
         private readonly IPasswordHasher _passwordsHasher;
-        private static List<User> users = new List<User>();
+        private static List<User> users = [];
 
         public UserController(IPasswordHasher passwordsHasher)
         {
@@ -19,16 +20,16 @@ namespace TasksMgmtAPI.Controllers
         }
 
         [HttpPost("register")]
-        public IActionResult Register(User user)
+        public IActionResult Register(UserModel userModel)
         {
-            var passwordHash = _passwordsHasher.GeneratePasswordHash(user.Password);
+            var passwordHash = _passwordsHasher.GeneratePasswordHash(userModel.Password);
             var savedUser = new User
             {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Password = passwordHash,
-                Email = user.Email,
-                DateOfBirth = user.DateOfBirth
+                FirstName = userModel.FirstName,
+                LastName = userModel.LastName,
+                PasswordHash = passwordHash,
+                Email = userModel.Email,
+                DateOfBirth = userModel.DateOfBirth
             };
             users.Add(savedUser);
             return Ok(savedUser);
@@ -48,7 +49,7 @@ namespace TasksMgmtAPI.Controllers
                 return NotFound("User not found");
             }
 
-            var verified = _passwordsHasher.VerifyPassword(model.Password, user.Password);
+            var verified = _passwordsHasher.VerifyPassword(model.Password, user.PasswordHash);
             if (!verified)
             {
                 return NotFound("User/Password is incorrect");

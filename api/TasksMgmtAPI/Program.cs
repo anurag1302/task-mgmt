@@ -1,4 +1,6 @@
 
+using Microsoft.EntityFrameworkCore;
+using TasksMgmt.Infrastructure.Data;
 using TasksMgmtAPI.Utilities;
 
 namespace TasksMgmtAPI
@@ -8,6 +10,7 @@ namespace TasksMgmtAPI
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            var configuration = builder.Configuration;
 
             // Add services to the container.
 
@@ -16,6 +19,10 @@ namespace TasksMgmtAPI
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
+            builder.Services.AddDbContext<TasksDBContext>(options =>
+            {
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+            });
 
             var app = builder.Build();
 
