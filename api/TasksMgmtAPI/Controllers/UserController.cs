@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
 using TasksMgmt.API.Models;
+using TasksMgmt.API.Utilities;
 using TasksMgmt.Core.Entities;
 using TasksMgmtAPI.Models;
 using TasksMgmtAPI.Utilities;
@@ -12,11 +13,13 @@ namespace TasksMgmtAPI.Controllers
     public class UserController : ControllerBase
     {
         private readonly IPasswordHasher _passwordsHasher;
+        private readonly IJwtProvider _jwtProvider;
         private static List<User> users = [];
 
-        public UserController(IPasswordHasher passwordsHasher)
+        public UserController(IPasswordHasher passwordsHasher, IJwtProvider jwtProvider)
         {
             _passwordsHasher = passwordsHasher;
+            _jwtProvider = jwtProvider;
         }
 
         [HttpPost("register")]
@@ -54,7 +57,14 @@ namespace TasksMgmtAPI.Controllers
             {
                 return NotFound("User/Password is incorrect");
             }
-            return Ok(new { message = "Login Successful" });
+
+            var successMessage = new
+            {
+                Email = user.Email,
+                StatusCode = 200,
+                Token = _jwtProvider.GenerateToken(user)
+            };
+            return Ok(successMessage);
         }
     }
 }

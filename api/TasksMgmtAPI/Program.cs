@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using TasksMgmt.API.Utilities;
 using TasksMgmt.Infrastructure.Data;
 using TasksMgmtAPI.Utilities;
 
@@ -22,6 +23,7 @@ namespace TasksMgmtAPI
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
+            builder.Services.AddSingleton<IJwtProvider, JwtProvider>();
             builder.Services.AddDbContext<TasksDBContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
