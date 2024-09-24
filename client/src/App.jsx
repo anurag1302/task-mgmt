@@ -4,6 +4,7 @@ import HomePage from "./components/HomePage";
 import RegisterForm from "./components/RegisterForm";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import LoginForm from "./components/LoginForm";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/register" element={<RegisterForm />} />
+            <Route path="/login" element={<LoginForm />} />
           </Routes>
         </main>
 

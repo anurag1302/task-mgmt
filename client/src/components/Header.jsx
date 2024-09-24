@@ -9,9 +9,14 @@ const Header = () => (
       <div className="text-center mt-2 sm:mt-0">
         <h2 className="text-md sm:text-xl">Task Management System</h2>
       </div>
-      <Link to="/register" className="text-xl mt-2 sm:mt-0">
-        Register
-      </Link>
+      <div className="flex">
+        <Link to="/login" className="text">
+          Login
+        </Link>
+        <Link to="/register" className="text">
+          Register
+        </Link>
+      </div>
     </nav>
   </header>
 );

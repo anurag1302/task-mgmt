@@ -1,0 +1,8 @@
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+  width: 40px;
+}
+
+.flex-item {
+}
