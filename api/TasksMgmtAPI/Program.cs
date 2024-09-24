@@ -1,5 +1,8 @@
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using TasksMgmt.Infrastructure.Data;
 using TasksMgmtAPI.Utilities;
 
@@ -24,6 +27,21 @@ namespace TasksMgmtAPI
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
 
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidIssuer = configuration.GetSection("JwtSecrets:Issuer").Value,
+                        ValidAudience = configuration.GetSection("JwtSecrets:Audience").Value,
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("JwtSecrets:SecretKey").Value))
+                    };
+                });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -35,6 +53,7 @@ namespace TasksMgmtAPI
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 
