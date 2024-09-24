@@ -6,3 +6,8 @@
 /api/TasksMgmtAPI/bin/Debug/net8.0
 /api/TasksMgmtAPI/obj
 /api/TasksMgmtAPI/TasksMgmtAPI.csproj.user
+/api/TasksMgmt.Core/bin/Debug/net8.0
+/api/TasksMgmt.Core/obj
+/api/TasksMgmt.Infrastructure/bin/Debug/net8.0
+/api/TasksMgmt.Infrastructure/obj
+/api/TasksMgmtAPI/TasksMgmt.API.csproj.user
