@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const RegisterForm = () => {
   const [formData, setFormData] = useState({
@@ -11,15 +13,56 @@ const RegisterForm = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Form validation and handling logic here
-    console.log("Form submitted:", formData);
+
+    let isValid = validateForm();
+
+    if (isValid) {
+      try {
+        const API_URl = "https://localhost:7173/api/User/register";
+        const response = await axios.post(API_URl, formData);
+        console.log(response);
+        navigate("/login");
+      } catch (ex) {
+        console.error("Registration failed:", ex.response);
+        setErrors({ general: "Registration failed. Please try again." });
+      }
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.firstName) {
+      newErrors.firstName = "First Name is required";
+    }
+
+    if (!formData.lastName) {
+      newErrors.lastName = "Last Name is required";
+    }
+
+    if (!formData.email) {
+      newErrors.email = "Email is required";
+    }
+    if (!formData.password) {
+      newErrors.password = "Password is required";
+    } else if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match";
+    }
+
+    if (!formData.dateOfBirth) {
+      newErrors.dateOfBirth = "Date of Birth is required";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   return (
