@@ -11,3 +11,4 @@
 /api/TasksMgmt.Infrastructure/bin/Debug/net8.0
 /api/TasksMgmt.Infrastructure/obj
 /api/TasksMgmtAPI/TasksMgmt.API.csproj.user
+/api/TasksMgmtAPI/.vs/ProjectEvaluation

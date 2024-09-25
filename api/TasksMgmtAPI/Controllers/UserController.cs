@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using TasksMgmt.API.Models;
 using TasksMgmt.API.Utilities;
 using TasksMgmt.Core.Entities;
+using TasksMgmt.Core.Interfaces;
 using TasksMgmtAPI.Models;
 using TasksMgmtAPI.Utilities;
 
@@ -14,12 +15,16 @@ namespace TasksMgmtAPI.Controllers
     {
         private readonly IPasswordHasher _passwordsHasher;
         private readonly IJwtProvider _jwtProvider;
+        private readonly IUserRepository _repository; 
         private static List<User> users = [];
 
-        public UserController(IPasswordHasher passwordsHasher, IJwtProvider jwtProvider)
+        public UserController(IPasswordHasher passwordsHasher, 
+            IJwtProvider jwtProvider,
+            IUserRepository repository)
         {
             _passwordsHasher = passwordsHasher;
             _jwtProvider = jwtProvider;
+            _repository = repository;
         }
 
         [HttpPost("register")]
@@ -28,14 +33,18 @@ namespace TasksMgmtAPI.Controllers
             var passwordHash = _passwordsHasher.GeneratePasswordHash(userModel.Password);
             var savedUser = new User
             {
+                Id = Guid.NewGuid(),
                 FirstName = userModel.FirstName,
                 LastName = userModel.LastName,
                 PasswordHash = passwordHash,
                 Email = userModel.Email,
-                DateOfBirth = userModel.DateOfBirth
+                DateOfBirth = userModel.DateOfBirth,
+                CreatedOnUtc = DateTime.UtcNow,
+                CreatedBy = 1001
             };
-            users.Add(savedUser);
-            return Ok(savedUser);
+            var user = _repository.CreateAsync(savedUser);
+
+            return Ok(user);
         }
 
         [HttpPost("login")]
@@ -46,7 +55,7 @@ namespace TasksMgmtAPI.Controllers
                 return BadRequest();
             }
 
-            var user = users.SingleOrDefault(u => u.Email == model.Email);
+            var user = _repository.SelectAsync(x => x.Email == model.Email).FirstOrDefault();
             if (user is null)
             {
                 return NotFound("User not found");

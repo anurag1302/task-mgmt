@@ -4,7 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using TasksMgmt.API.Utilities;
+using TasksMgmt.Core.Entities;
+using TasksMgmt.Core.Interfaces;
 using TasksMgmt.Infrastructure.Data;
+using TasksMgmt.Infrastructure.Repository;
 using TasksMgmtAPI.Utilities;
 
 namespace TasksMgmtAPI
@@ -24,6 +27,7 @@ namespace TasksMgmtAPI
             builder.Services.AddSwaggerGen();
             builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
             builder.Services.AddSingleton<IJwtProvider, JwtProvider>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddDbContext<TasksDBContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));

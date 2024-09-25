@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TasksMgmt.Core.Entities;
 
 namespace TasksMgmt.Infrastructure.Data
 {
@@ -7,6 +8,6 @@ namespace TasksMgmt.Infrastructure.Data
         public TasksDBContext(DbContextOptions<TasksDBContext> options) : base(options) { 
         }
 
-        public DbSet<Task> Tasks { get; set;}
+        public DbSet<User> Users { get; set;}
     }
 }
