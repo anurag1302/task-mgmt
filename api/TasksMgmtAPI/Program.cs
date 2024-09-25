@@ -48,6 +48,17 @@ namespace TasksMgmtAPI
                     };
                 });
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("Cors", policy =>
+                {
+                    policy
+                    .AllowAnyHeader()
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod();
+                });
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -57,6 +68,7 @@ namespace TasksMgmtAPI
                 app.UseSwaggerUI();
             }
 
+            app.UseCors("Cors");
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
