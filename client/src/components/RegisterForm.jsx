@@ -13,6 +13,7 @@ const RegisterForm = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -26,6 +27,7 @@ const RegisterForm = () => {
 
     if (isValid) {
       try {
+        setLoading(true);
         const API_URl = "https://localhost:7173/api/User/register";
         const response = await axios.post(API_URl, formData);
         console.log(response);
@@ -33,6 +35,8 @@ const RegisterForm = () => {
       } catch (ex) {
         console.error("Registration failed:", ex.response);
         setErrors({ general: "Registration failed. Please try again." });
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -156,9 +160,12 @@ const RegisterForm = () => {
         <div className="text-center">
           <button
             type="submit"
-            className="bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700 transition duration-300"
+            className={`bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700 transition duration-300 ${
+              loading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            disabled={loading}
           >
-            Register
+            {loading ? "Registering..." : "Register"}
           </button>
         </div>
       </form>
