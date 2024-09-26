@@ -16,7 +16,6 @@ namespace TasksMgmtAPI.Controllers
         private readonly IPasswordHasher _passwordsHasher;
         private readonly IJwtProvider _jwtProvider;
         private readonly IUserRepository _repository; 
-        private static List<User> users = [];
 
         public UserController(IPasswordHasher passwordsHasher, 
             IJwtProvider jwtProvider,
