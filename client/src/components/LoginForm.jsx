@@ -21,10 +21,11 @@ const LoginForm = () => {
       const API_URL = "https://localhost:7173/api/User/login";
       const response = await axios.post(API_URL, formData);
       console.log(response);
+      sessionStorage.setItem("isLoggedIn", true);
       navigate("/dashboard");
     } catch (error) {
-      console.error("Registration failed:", ex.response);
-      setErrors({ general: "Registration failed. Please try again." });
+      console.error("Login failed:", error.response);
+      setErrors({ general: "Login failed. Please try again." });
     }
   };
 
