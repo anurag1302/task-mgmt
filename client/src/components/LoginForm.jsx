@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -12,10 +15,17 @@ const LoginForm = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Form validation logic here
-    console.log("Login details submitted:", formData);
+    try {
+      const API_URL = "https://localhost:7173/api/User/login";
+      const response = await axios.post(API_URL, formData);
+      console.log(response);
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Registration failed:", ex.response);
+      setErrors({ general: "Registration failed. Please try again." });
+    }
   };
 
   return (
