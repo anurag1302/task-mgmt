@@ -1,5 +1,5 @@
 import React from "react";
-import homepageimg from "/hompage.jpg";
+import homepageimg from "/task-mgmt-home-page.png";
 
 function HomePage() {
   return (
@@ -7,6 +7,8 @@ function HomePage() {
       <img
         src={homepageimg}
         alt="Task Management"
+        width={200}
+        height={150}
         className="mx-auto w-full max-w-xs sm:max-w-md h-auto rounded-lg shadow-lg"
       />
       <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 mt-6">
